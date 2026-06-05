@@ -8,10 +8,8 @@ class DatabaseManager:
         db_path="logs/attendance.db"
     ):
 
-        self.db_path = db_path
-
         self.connection = sqlite3.connect(
-            self.db_path
+            db_path
         )
 
         self.cursor = (
@@ -39,6 +37,30 @@ class DatabaseManager:
         )
 
         self.connection.commit()
+
+    def attendance_exists(
+        self,
+        name,
+        date
+    ):
+
+        self.cursor.execute(
+            """
+            SELECT *
+            FROM attendance
+            WHERE name = ?
+            AND date = ?
+            """,
+            (
+                name,
+                date
+            )
+        )
+
+        return (
+            self.cursor.fetchone()
+            is not None
+        )
 
     def add_attendance(
         self,
@@ -76,7 +98,9 @@ class DatabaseManager:
             """
         )
 
-        return self.cursor.fetchall()
+        return (
+            self.cursor.fetchall()
+        )
 
     def close(self):
 

@@ -57,9 +57,6 @@ class AttendanceLogger:
         if name == "UNKNOWN":
             return
 
-        if name in self.logged_people:
-            return
-
         now = datetime.now()
 
         date = now.strftime(
@@ -69,6 +66,13 @@ class AttendanceLogger:
         time = now.strftime(
             "%H:%M:%S"
         )
+
+        if self.database.attendance_exists(
+            name,
+            date
+        ):
+
+            return
 
         with open(
             self.csv_path,
@@ -92,10 +96,6 @@ class AttendanceLogger:
             name,
             date,
             time
-        )
-
-        self.logged_people.add(
-            name
         )
 
         print(
