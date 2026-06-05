@@ -24,7 +24,7 @@ class FaceRecognitionDashboard:
         )
 
         self.root.geometry(
-            "1200x800"
+            "1800x900"
         )
 
         self.root.minsize(
@@ -361,9 +361,87 @@ class FaceRecognitionDashboard:
 
     def view_analytics(self):
 
-        messagebox.showinfo(
-            "Analytics",
-            "Phase 7.6 Coming Next"
+        import pandas as pd
+
+        try:
+
+            df = pd.read_csv(
+                "logs/attendance.csv"
+            )
+
+        except Exception as error:
+
+            messagebox.showerror(
+                "Error",
+                str(error)
+            )
+
+            return
+
+        analytics_window = tk.Toplevel(
+            self.root
+        )
+
+        analytics_window.title(
+            "Attendance Analytics"
+        )
+
+        analytics_window.geometry(
+            "900x600"
+        )
+
+        text_box = tk.Text(
+            analytics_window,
+            font=(
+                "Arial",
+                14
+            )
+        )
+
+        text_box.pack(
+            fill="both",
+            expand=True,
+            padx=20,
+            pady=20
+        )
+
+        report = ""
+
+        report += (
+            "===== ATTENDANCE ANALYTICS =====\n\n"
+        )
+
+        report += (
+            f"Total Records : {len(df)}\n\n"
+        )
+
+        report += (
+            f"Unique People : {df['Name'].nunique()}\n\n"
+        )
+
+        report += (
+            "Attendance Count:\n\n"
+        )
+
+        report += str(
+            df["Name"]
+            .value_counts()
+        )
+
+        report += "\n\n"
+
+        report += (
+            "Attendance By Date:\n\n"
+        )
+
+        report += str(
+            df["Date"]
+            .value_counts()
+        )
+
+        text_box.insert(
+            tk.END,
+            report
         )
 
     def run(self):
