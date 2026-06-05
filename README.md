@@ -1,169 +1,338 @@
-# Real-Time Face Recognition and Identity Management System
+# 🎯 Real-Time Face Recognition System
 
-## Overview
-
-A modular real-time face recognition system built using Python, OpenCV, InsightFace, and ONNX Runtime. The system creates a facial database from local images, extracts facial embeddings, detects faces in images and live video streams, and performs identity recognition with confidence scoring.
+A modular real-time face recognition system built using **Python, OpenCV, InsightFace, and ONNX Runtime**. The system creates a face database from local images, extracts facial embeddings, performs real-time face detection through a webcam, and identifies known individuals using embedding-based matching.
 
 ---
 
-## Features
+## 🚀 Features
 
-### Completed
+### Phase 1 - Face Database Generation
 
-* Face Database Creation
-* Face Embedding Extraction
-* Face Detection using InsightFace
-* Bounding Box Visualization
-* Face Detection Confidence Display
-* Modular Project Architecture
-* Git Version Control
-* GitHub Integration
+* Automatic dataset scanning
+* Face detection from images
+* Face embedding extraction
+* Serialized embedding database creation
+* Multi-person support
 
-### Upcoming
+### Phase 2 - Face Detection
 
-* Real-Time Webcam Recognition
-* Confidence-Based Identity Matching
-* Unknown Face Detection
-* Attendance Logging
-* SQLite Integration
-* Performance Evaluation
-* Multi-Face Recognition
+* Real-time face detection
+* Bounding box visualization
+* Multi-face support
+* Detection confidence scores
+
+### Phase 3 - Real-Time Face Recognition
+
+* Webcam-based face recognition
+* Identity matching using facial embeddings
+* Unknown face rejection
+* Confidence score display
+* Reduced flickering using frame caching
+* CPU optimization using frame skipping
 
 ---
 
-## Technology Stack
+## 🛠️ Tech Stack
+
+### Languages
 
 * Python 3.13
+
+### Computer Vision
+
 * OpenCV
 * InsightFace
+
+### Deep Learning Runtime
+
 * ONNX Runtime
+
+### Data Processing
+
 * NumPy
-* Pandas
-* Scikit-Learn
+* Pickle
+
+### Development Tools
+
 * Git
 * GitHub
+* VS Code
 
 ---
 
-## Project Structure
+## 📂 Project Structure
 
+```text
 FaceRecognitionSystem/
 
 ├── data/
-
-│   └── known_faces/
-
-│       ├── Ayush/
-
-│       └── Aryan/
-
+│   ├── known_faces/
+│   │   ├── Ayush/
+│   │   └── Aryan/
+│   │
+│   └── test_images/
 │
-
 ├── embeddings/
-
 │   └── face_database.pkl
-
 │
-
-├── logs/
-
 ├── screenshots/
-
 │
-
 ├── src/
-
-│   ├── face_encoder.py
-
-│   ├── face_detector.py
-
+│   ├── __init__.py
+│   ├── face_engine.py
 │   ├── database_builder.py
-
-│   └── utils.py
-
+│   ├── database_loader.py
+│   ├── recognizer.py
+│   └── camera.py
 │
-
-├── tests/
-
-│   └── test_detector.py
-
-│
-
+├── build_database.py
+├── test_recognition.py
 ├── main.py
-
 ├── requirements.txt
-
 └── README.md
+```
 
 ---
 
-## Phase 1 Workflow
+## ⚙️ System Workflow
 
+```text
 Known Face Images
-
-↓
-
-Face Detection
-
-↓
-
-Face Embedding Extraction
-
-↓
-
-Embedding Database Creation
-
-↓
-
+        │
+        ▼
+Face Database Builder
+        │
+        ▼
+Face Embeddings
+        │
+        ▼
 face_database.pkl
+        │
+        ▼
+Webcam Input
+        │
+        ▼
+Face Detection
+        │
+        ▼
+Embedding Extraction
+        │
+        ▼
+Database Matching
+        │
+        ▼
+Identity Recognition
+        │
+        ▼
+Name + Confidence Display
+```
 
 ---
 
-## Phase 2 Workflow
+## 📥 Installation
 
-Input Image
+### Clone Repository
 
-↓
+```bash
+git clone https://github.com/<username>/FaceRecognitionSystem.git
 
-InsightFace Detector
+cd FaceRecognitionSystem
+```
 
-↓
+### Create Virtual Environment
 
-Bounding Box Detection
+```bash
+python -m venv face
+```
 
-↓
+### Activate Environment
 
-Detection Confidence
+Linux:
 
-↓
+```bash
+source face/bin/activate
+```
 
-Visualization
+Windows:
+
+```bash
+face\Scripts\activate
+```
+
+### Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
 
 ---
 
-## Current Status
+## 📸 Dataset Preparation
 
-Phase 1 : Complete
+Store images in the following format:
 
-Phase 2 : Complete
+```text
+data/
 
-Phase 3 : In Progress
+└── known_faces/
+
+    ├── Person1/
+    │   ├── image1.jpg
+    │   ├── image2.jpg
+    │   └── image3.jpg
+    │
+    └── Person2/
+        ├── image1.jpg
+        ├── image2.jpg
+        └── image3.jpg
+```
+
+Each folder name becomes the identity label.
 
 ---
 
-## Sample Output
+## 🏗️ Build Face Database
 
+Generate facial embeddings:
+
+```bash
+python build_database.py
+```
+
+Example Output:
+
+```text
+Processing Ayush
+✓ image1.jpg
+✓ image2.jpg
+
+Database saved to embeddings/face_database.pkl
+```
+
+---
+
+## 🧪 Test Recognition on an Image
+
+Place a test image inside:
+
+```text
+data/test_images/
+```
+
+Run:
+
+```bash
+python test_recognition.py
+```
+
+Example Output:
+
+```text
 Faces Found: 1
 
-Detection Confidence: 0.82
+Name: Ayush
+Distance: 11.43
+Confidence: 36.49%
+```
 
 ---
 
-## Future Enhancements
+## 🎥 Run Real-Time Face Recognition
 
-* Real-Time Recognition
-* Attendance System
-* SQLite Storage
-* Face Search Engine
-* GUI Dashboard
+Start webcam recognition:
+
+```bash
+python main.py
+```
+
+Press:
+
+```text
+Q
+```
+
+to quit.
+
+---
+
+## 📊 Performance
+
+Observed Matching Distances:
+
+| Scenario     | Distance Range |
+| ------------ | -------------- |
+| Known Face   | 11 - 14        |
+| Unknown Face | 15+            |
+
+Current Recognition Threshold:
+
+```python
+threshold = 15.0
+```
+
+---
+
+## ⚠️ Limitations
+
+* Accuracy decreases at extreme face angles.
+* Long-distance recognition depends on face resolution.
+* Dataset quality directly affects recognition performance.
+* Webcam support depends on operating system drivers.
+
+---
+
+## 🔮 Future Enhancements
+
+### Phase 4
+
+* Attendance Logging System
+* CSV Export
+* Recognition History
+
+### Phase 5
+
+* SQLite Database Integration
+* Attendance Analytics Dashboard
+* Searchable Records
+
+### Phase 6
+
+* Multi-Person Recognition
+* GPU Acceleration
 * Raspberry Pi Deployment
+
+---
+
+## 📸 Screenshots
+
+### Face Detection
+
+Add:
+
+```text
+screenshots/phase2_face_detection.png
+```
+
+### Real-Time Recognition
+
+Add:
+
+```text
+screenshots/phase3_recognition.png
+```
+
+### Terminal Output
+
+Add:
+
+```text
+screenshots/phase3_terminal_output.png
+```
+
+---
+
+## 👨‍💻 Author
+
+**Ayush**
+
+Computer Vision | Machine Learning | Artificial Intelligence | Python Development
