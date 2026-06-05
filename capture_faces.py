@@ -1,17 +1,11 @@
 import os
 import cv2
 import time
+
 from src.database_builder import DatabaseBuilder
 
-def capture_faces():
 
-    print(
-        "\n===== FACE DATASET CAPTURE =====\n"
-    )
-
-    person_name = input(
-        "Enter Person Name: "
-    ).strip()
+def capture_faces(person_name):
 
     folder_path = os.path.join(
         "data",
@@ -19,43 +13,29 @@ def capture_faces():
         person_name
     )
 
-    if not os.path.exists(
-        folder_path
-    ):
+    if not os.path.exists(folder_path):
 
-        print(
-            "\nPerson not registered."
+        raise Exception(
+            f"{person_name} not registered."
         )
-
-        print(
-            "Run register_person.py first."
-        )
-
-        return
 
     cap = cv2.VideoCapture(0)
 
     if not cap.isOpened():
 
-        print(
+        raise Exception(
             "Could not access webcam."
         )
-
-        return
 
     image_count = 0
 
     target_images = 20
 
     print(
-        "\nLook at the camera."
+        "\nCapturing Faces..."
     )
 
-    print(
-        "Capturing starts in 3 seconds..."
-    )
-
-    time.sleep(3)
+    time.sleep(2)
 
     while image_count < target_images:
 
@@ -78,7 +58,7 @@ def capture_faces():
 
         cv2.putText(
             frame,
-            f"Captured: {image_count}/{target_images}",
+            f"{image_count}/{target_images}",
             (20, 40),
             cv2.FONT_HERSHEY_SIMPLEX,
             1,
@@ -87,12 +67,8 @@ def capture_faces():
         )
 
         cv2.imshow(
-            "Dataset Capture",
+            "Capturing Faces",
             frame
-        )
-
-        print(
-            f"Saved: image_{image_count}.jpg"
         )
 
         cv2.waitKey(1)
@@ -104,15 +80,11 @@ def capture_faces():
     cv2.destroyAllWindows()
 
     print(
-        "\nCapture Complete."
+        "Capture Complete"
     )
 
     print(
-        f"{target_images} images saved."
-    )
-
-    print(
-        "\nRebuilding Face Database..."
+        "Updating Database..."
     )
 
     builder = DatabaseBuilder()
@@ -126,10 +98,16 @@ def capture_faces():
     )
 
     print(
-        "\nDatabase Updated Successfully."
+        "Database Updated"
     )
 
 
 if __name__ == "__main__":
 
-    capture_faces()
+    person_name = input(
+        "Enter Person Name: "
+    )
+
+    capture_faces(
+        person_name
+    )
