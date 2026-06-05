@@ -1,6 +1,13 @@
 import csv
 import os
+
 from datetime import datetime
+
+from src.database_manager import (
+    DatabaseManager
+)
+
+
 class AttendanceLogger:
 
     def __init__(
@@ -11,6 +18,10 @@ class AttendanceLogger:
         self.csv_path = csv_path
 
         self.logged_people = set()
+
+        self.database = (
+            DatabaseManager()
+        )
 
         self._create_file()
 
@@ -37,10 +48,12 @@ class AttendanceLogger:
                         "Time"
                     ]
                 )
+
     def mark_attendance(
         self,
         name
     ):
+
         if name == "UNKNOWN":
             return
 
@@ -48,20 +61,25 @@ class AttendanceLogger:
             return
 
         now = datetime.now()
+
         date = now.strftime(
             "%Y-%m-%d"
         )
+
         time = now.strftime(
             "%H:%M:%S"
         )
+
         with open(
             self.csv_path,
             "a",
             newline=""
         ) as file:
+
             writer = csv.writer(
                 file
             )
+
             writer.writerow(
                 [
                     name,
@@ -69,9 +87,17 @@ class AttendanceLogger:
                     time
                 ]
             )
+
+        self.database.add_attendance(
+            name,
+            date,
+            time
+        )
+
         self.logged_people.add(
             name
         )
+
         print(
             f"[ATTENDANCE] {name} logged"
         )
