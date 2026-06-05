@@ -1,7 +1,7 @@
 import os
 import cv2
 import time
-
+from src.database_builder import DatabaseBuilder
 
 def capture_faces():
 
@@ -109,6 +109,24 @@ def capture_faces():
 
     print(
         f"{target_images} images saved."
+    )
+
+    print(
+        "\nRebuilding Face Database..."
+    )
+
+    builder = DatabaseBuilder()
+
+    builder.build_database(
+        "data/known_faces"
+    )
+
+    builder.save_database(
+        "embeddings/face_database.pkl"
+    )
+
+    print(
+        "\nDatabase Updated Successfully."
     )
 
 
