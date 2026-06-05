@@ -1,0 +1,15 @@
+venv/
+
+__pycache__/
+
+*.pyc
+
+embeddings/*.pkl
+
+logs/*.csv
+
+.idea/
+
+.vscode/
+
+.DS_Store
