@@ -1,5 +1,5 @@
 import cv2
-
+from src.attendance_logger import AttendanceLogger
 from src.face_engine import FaceEngine
 from src.database_loader import DatabaseLoader
 from src.recognizer import Recognizer
@@ -22,6 +22,9 @@ def main():
     engine = FaceEngine()
 
     camera = Camera()
+    attendance = (
+        AttendanceLogger()
+    )
 
     print(
         "\nFace Recognition Started"
@@ -74,6 +77,7 @@ def main():
                         embedding
                     )
                 )
+                attendance.mark_attendance(name)
 
                 confidence = (
                     recognizer
