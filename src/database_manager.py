@@ -18,6 +18,46 @@ class DatabaseManager:
 
         self.create_table()
 
+    def search_by_name(
+        self,
+        name
+    ):
+
+        self.cursor.execute(
+            """
+            SELECT *
+            FROM attendance
+            WHERE name = ?
+            """,
+            (
+                name,
+            )
+        )
+
+        return (
+            self.cursor.fetchall()
+        )
+    
+    def search_by_date(
+        self,
+        date
+    ):
+
+        self.cursor.execute(
+            """
+            SELECT *
+            FROM attendance
+            WHERE date = ?
+            """,
+            (
+                date,
+            )
+        )
+
+        return (
+            self.cursor.fetchall()
+        )
+
     def create_table(self):
 
         self.cursor.execute(
