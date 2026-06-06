@@ -9,19 +9,13 @@ from reportlab.lib.styles import (
     getSampleStyleSheet
 )
 
-
 def generate_pdf():
-
     try:
-
         df = pd.read_csv(
             "logs/attendance.csv"
         )
-
     except Exception as error:
-
         print(error)
-
         return
 
     pdf = SimpleDocTemplate(

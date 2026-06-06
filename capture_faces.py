@@ -5,9 +5,15 @@ import time
 from src.database_builder import DatabaseBuilder
 
 
+PROJECT_ROOT = os.path.dirname(
+    os.path.abspath(__file__)
+)
+
+
 def capture_faces(person_name):
 
     folder_path = os.path.join(
+        PROJECT_ROOT,
         "data",
         "known_faces",
         person_name
@@ -90,11 +96,19 @@ def capture_faces(person_name):
     builder = DatabaseBuilder()
 
     builder.build_database(
-        "data/known_faces"
+        os.path.join(
+            PROJECT_ROOT,
+            "data",
+            "known_faces"
+        )
     )
 
     builder.save_database(
-        "embeddings/face_database.pkl"
+        os.path.join(
+            PROJECT_ROOT,
+            "embeddings",
+            "face_database.pkl"
+        )
     )
 
     print(
