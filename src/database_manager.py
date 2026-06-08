@@ -37,7 +37,7 @@ class DatabaseManager:
         return (
             self.cursor.fetchall()
         )
-    
+
     def search_by_date(
         self,
         date

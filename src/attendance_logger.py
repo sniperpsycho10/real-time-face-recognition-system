@@ -10,14 +10,23 @@ from src.database_manager import (
 
 class AttendanceLogger:
 
-    def __init__(
-        self,
-        csv_path="logs/attendance.csv"
-    ):
+    def __init__(self):
 
-        self.csv_path = csv_path
+        self.logs_folder = "logs"
 
-        self.logged_people = set()
+        os.makedirs(
+            self.logs_folder,
+            exist_ok=True
+        )
+
+        today = datetime.now().strftime(
+            "%Y_%m_%d"
+        )
+
+        self.csv_path = os.path.join(
+            self.logs_folder,
+            f"attendance_{today}.csv"
+        )
 
         self.database = (
             DatabaseManager()
@@ -55,6 +64,7 @@ class AttendanceLogger:
     ):
 
         if name == "UNKNOWN":
+
             return
 
         now = datetime.now()
