@@ -249,3 +249,19 @@ Export Reports
 Ayush Pratap Singh
 
 Computer Vision | Machine Learning | Cybersecurity | Python Development
+
+# 🎥 Project Demo
+
+A complete demonstration of the Face Recognition Attendance System can be viewed here:
+
+https://youtu.be/SQ0pqXcY8_g
+
+The demo showcases:
+
+- User Registration
+- Face Capture
+- Face Recognition
+- Attendance Logging
+- Attendance Search
+- PDF Report Generation
+- Dashboard Functionality
