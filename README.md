@@ -246,7 +246,7 @@ Export Reports
 
 ## Author
 
-Ayush Pratap Singh
+Akanksha Singh
 
 Computer Vision | Machine Learning | Cybersecurity | Python Development
 
